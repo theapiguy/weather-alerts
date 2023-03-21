@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+    <title>Weather Alert Search</title>
+    <style>
+        contentDiv {
+            bottom-border: solid;
+        }
+        span.thick {
+          font-weight: bold;
+        }
+        p.sep {
+            margin-bottom: .01em;
+        }
+    </style>
+</head>
+<body>
+<h1>Weather Alert Search</h1>
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.state_field.label() }}
+        {{ form.state_field() }}
+    </p>
+
+    <p>
+        {{ form.urgency_field.label() }}
+        {{ form.urgency_field() }}
+    </p>
+
+    <p>
+        {{ form.severity_field.label() }}
+        {{ form.severity_field() }}
+    </p>
+
+    <p>
+        {{ form.certainty_field.label() }}
+        {{ form.certainty_field() }}
+    </p>
+
+    <p>
+        {{ form.max_results_field.label() }}
+        {{ form.max_results_field() }}<br><br>
+        {% if form.max_results_field.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.max_results_field.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {{ form.submit() }}
+    </p>
+</form>
+    {% if results %}
+    <div>
+        <h2>Results</h2>
+        {% for result in results %}
+            <div class="contentDiv">
+                <p class="sep"><span class="thick">Headline:&nbsp;&nbsp;</span>{{result.headline}}</p><br>
+                <p class="sep"><span class="thick">Description:&nbsp;&nbsp;</span>{{result.description}}</p><br>
+                <p class="sep"><span class="thick">Effective:&nbsp;&nbsp;</span>{{result.effective}}</p><br>
+                <p class="sep"><span class="thick">Expires:&nbsp;&nbsp;</span>{{result.expires}}</p><br>
+                <p class="sep"><span class="thick">Area Description:&nbsp;&nbsp;</span>{{result.area_desc}}</p><br>
+                <p class="sep"><span class="thick">SAME:&nbsp;&nbsp;</span>{{result.same_codes}}</p><br>
+
+            </div>
+            <hr>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if message %}
+        <p><b>{{message}}</b></p>
+    {% endif %}
+</body>
+</html>
